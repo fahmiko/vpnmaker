@@ -1,19 +1,26 @@
 package id.group1.vpnaccountmaker;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import id.group1.vpnaccountmaker.helper.Preference;
 import id.group1.vpnaccountmaker.helper.VpnHelper;
 
 public class ViewServer extends AppCompatActivity {
     private VpnHelper dbHelper;
+    private Button create;
     private TextView titleServer, server, location, port, max, acc, active;
 
     @Override
@@ -34,6 +41,7 @@ public class ViewServer extends AppCompatActivity {
        max = findViewById(R.id.dt_login);
        active = findViewById(R.id.dt_active);
        acc = findViewById(R.id.dt_limit);
+       create = findViewById(R.id.button_create);
 
        // Instansiasi dan mendapatkan data dari SQLite Database
         dbHelper = new VpnHelper(this);
@@ -51,5 +59,17 @@ public class ViewServer extends AppCompatActivity {
             active.setText(cursor.getString(5)+" Days");
             acc.setText(cursor.getString(6)+" Account/Days");
         }
+     create.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+             Preference pr = new Preference(getApplicationContext());
+             if(pr.checkSavedCredetential()){
+                 Snackbar.make(v,"Account Berhasil Dibuat",Snackbar.LENGTH_SHORT).show();
+             }else {
+                 Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                 startActivity(i);
+             }
+         }
+     });
     }
 }

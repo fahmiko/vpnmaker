@@ -13,7 +13,7 @@ import java.security.interfaces.DSAPrivateKey;
 public class VpnHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "uts_vpn.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String ID = "id_server";
     private static final String NAME = "name_server";
@@ -34,6 +34,8 @@ public class VpnHelper extends SQLiteOpenHelper {
             ACC + " INTEGER, " +
             IMG + " VARCHAR(255))";
 
+    private static final String CREATE_TABLE_USER = "CREATE TABLE users(username VARCHAR(20) PRIMARY KEY, password VARCHAR(50))";
+
     public VpnHelper(Context context) {
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
     }
@@ -45,6 +47,9 @@ public class VpnHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        if(DATABASE_VERSION == 2){
+            db.execSQL(CREATE_TABLE_USER);
+            db.execSQL("INSERT INTO users (username,password) VALUES ('admin','admin')");
+        }
     }
 }
