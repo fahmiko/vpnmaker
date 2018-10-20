@@ -21,11 +21,12 @@ public class ServerAdapter extends RecyclerView.Adapter<ServerAdapter.MyViewHold
         // you provide access to all the views for a data item in a view holder
         public static class MyViewHolder extends RecyclerView.ViewHolder {
             // each data item is just a string in this case
-            public TextView text_server,text_location,text_acc;
+            private TextView text_server,text_location,text_acc,text_port;
             public MyViewHolder(View v) {
                 super(v);
                 text_server = itemView.findViewById(R.id.nameServer);
                 text_location = itemView.findViewById(R.id.location);
+                text_port = itemView.findViewById(R.id.port);
                 text_acc = itemView.findViewById(R.id.accRemaining);
             }
         }
@@ -53,6 +54,7 @@ public class ServerAdapter extends RecyclerView.Adapter<ServerAdapter.MyViewHold
             ServerModel server = myServers.get(position);
             holder.text_server.setText(server.getName_server());
             holder.text_location.setText(server.getName_server());
+            holder.text_port.setText(server.getPort());
             holder.text_acc.setText(""+server.getAcc_remaining());
 
         }

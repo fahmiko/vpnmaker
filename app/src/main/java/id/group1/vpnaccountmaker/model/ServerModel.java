@@ -4,13 +4,15 @@ public class ServerModel {
     private int id;
     private String name_server;
     private String location;
+    private String port;
     private int acc_remaining;
 
-    public ServerModel(int id_server, String name_server, String location, int acc_remaining) {
+    public ServerModel(int id_server, String name_server, String location, int acc_remaining, String port) {
         this.id = id_server;
         this.name_server = name_server;
         this.location = location;
         this.acc_remaining = acc_remaining;
+        this.port = port;
     }
 
     public int getId() {
@@ -28,4 +30,6 @@ public class ServerModel {
     public int getAcc_remaining() {
         return acc_remaining;
     }
+
+    public String getPort() { return port; }
 }

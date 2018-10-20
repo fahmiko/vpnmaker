@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:layout_margin="10dp"
+    tools:context=".ManageServer">
+
+    <EditText
+        android:id="@+id/txt_nserver"
+        android:hint="Name Server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/txt_location"
+        android:hint="Location"
+        android:layout_below="@+id/txt_nserver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/txt_acc"
+        android:hint="Account Remaining"
+        android:layout_below="@+id/txt_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"/>
+
+    <TextView
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/lb_protocol"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txt_acc"
+        android:textSize="@dimen/fab_margin"
+        android:text="Protocol  "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/groupProtocol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/lb_protocol"
+        android:layout_below="@+id/txt_acc">
+
+        <RadioGroup
+            android:id="@+id/radioPort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/rtcp"
+                android:checked="true"
+                android:text="TCP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <RadioButton
+                android:id="@+id/rudp"
+                android:text="UDP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RadioGroup>
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/txt_maxlogin"
+        android:layout_below="@+id/groupProtocol"
+        android:hint="Max Login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/txt_active"
+        android:layout_below="@+id/txt_maxlogin"
+        android:hint="Active"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btn_save"
+        android:text="Save"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_back"
+        android:text="Kembali"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

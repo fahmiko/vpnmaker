@@ -13,11 +13,17 @@ public class VpnHelper extends SQLiteOpenHelper {
     private static final String NAME = "name_server";
     private static final String LOCATION = "location";
     private static final String ACC = "acc_remaining";
+    private static final String PORT = "port";
+    private static final String MAX = "max_login";
+    private static final String ACTIVE ="active";
 
     private static final String CREATE_TABLE_SERVER = "CREATE TABLE server (" +
             ID +" INTEGER PRIMARY KEY AUTOINCREMENT, " +
             NAME + " varchar(50), " +
             LOCATION + " varchar(50), " +
+            PORT + " varchar(10), "+
+            MAX + " INTEGER, "+
+            ACTIVE + " INTEGER, "+
             ACC + " INTEGER)";
 
     public VpnHelper(Context context) {
@@ -27,9 +33,9 @@ public class VpnHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_SERVER);
-        db.execSQL("INSERT INTO server values (1,'Singapore','Singapore','50')");
-        db.execSQL("INSERT INTO server values (2,'Indonesia','Indonesia','50')");
-        db.execSQL("INSERT INTO server values (3,'Japan','Japan','50')");
+        db.execSQL("INSERT INTO server values (1,'sgdo.freevpn.net','Singapore','TCP',2,10,50)");
+        db.execSQL("INSERT INTO server values (2,'id.freevpn.net','Indonesia','UDP',2,10,25)");
+        db.execSQL("INSERT INTO server values (3,'jp.freevpn.net','Japan','TCP',2,7,10)");
     }
 
     @Override
