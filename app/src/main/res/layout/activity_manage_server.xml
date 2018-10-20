@@ -67,12 +67,14 @@
         android:id="@+id/txt_maxlogin"
         android:layout_below="@+id/groupProtocol"
         android:hint="Max Login"
+        android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/txt_active"
         android:layout_below="@+id/txt_maxlogin"
+        android:inputType="number"
         android:hint="Active"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -91,5 +93,25 @@
         android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:text="Upload"
+        android:id="@+id/btn_upload"
+        android:layout_marginTop="10dp"
+        android:src="@android:drawable/ic_menu_upload"
+        android:layout_below="@+id/txt_active"
+        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image_manage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/txt_active"
+        android:layout_marginLeft="20dp"
+        android:layout_toEndOf="@id/btn_upload"
+        android:padding="10dp"
+        android:src="@mipmap/ic_launcher" />
 
 </RelativeLayout>

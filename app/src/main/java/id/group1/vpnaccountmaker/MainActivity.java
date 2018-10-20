@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (cursor.moveToFirst()){
             do {
-                ServerModel server = new ServerModel(cursor.getInt(0), cursor.getString(1),cursor.getString(2),cursor.getInt(6),cursor.getString(3));
+                ServerModel server = new ServerModel(cursor.getInt(0), cursor.getString(1),cursor.getString(2),cursor.getInt(6),cursor.getString(3),cursor.getString(7));
                 serverList.add(server);
             } while (cursor.moveToNext());
         }

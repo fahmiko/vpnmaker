@@ -1,6 +1,7 @@
 package id.group1.vpnaccountmaker.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import id.group1.vpnaccountmaker.R;
 import id.group1.vpnaccountmaker.model.ServerModel;
 
@@ -22,12 +24,14 @@ public class ServerAdapter extends RecyclerView.Adapter<ServerAdapter.MyViewHold
         public static class MyViewHolder extends RecyclerView.ViewHolder {
             // each data item is just a string in this case
             private TextView text_server,text_location,text_acc,text_port;
+            private CircleImageView img_flag;
             public MyViewHolder(View v) {
                 super(v);
                 text_server = itemView.findViewById(R.id.nameServer);
                 text_location = itemView.findViewById(R.id.location);
                 text_port = itemView.findViewById(R.id.port);
                 text_acc = itemView.findViewById(R.id.accRemaining);
+                img_flag = itemView.findViewById(R.id.image_flag);
             }
         }
 
@@ -52,11 +56,13 @@ public class ServerAdapter extends RecyclerView.Adapter<ServerAdapter.MyViewHold
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
             ServerModel server = myServers.get(position);
+            Uri uri = Uri.parse(server.getImg());
+
             holder.text_server.setText(server.getName_server());
             holder.text_location.setText(server.getName_server());
             holder.text_port.setText(server.getPort());
             holder.text_acc.setText(""+server.getAcc_remaining());
-
+            holder.img_flag.setImageURI(uri);
         }
 
         // Return the size of your dataset (invoked by the layout manager)

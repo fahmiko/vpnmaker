@@ -1,8 +1,14 @@
 package id.group1.vpnaccountmaker.helper;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.security.interfaces.DSAPrivateKey;
 
 public class VpnHelper extends SQLiteOpenHelper {
 
@@ -16,15 +22,17 @@ public class VpnHelper extends SQLiteOpenHelper {
     private static final String PORT = "port";
     private static final String MAX = "max_login";
     private static final String ACTIVE ="active";
+    private static final String IMG = "img";
 
     private static final String CREATE_TABLE_SERVER = "CREATE TABLE server (" +
             ID +" INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            NAME + " varchar(50), " +
-            LOCATION + " varchar(50), " +
-            PORT + " varchar(10), "+
+            NAME + " VARCHAR(50), " +
+            LOCATION + " VARCHAR(50), " +
+            PORT + " VARCHAR(10), "+
             MAX + " INTEGER, "+
             ACTIVE + " INTEGER, "+
-            ACC + " INTEGER)";
+            ACC + " INTEGER, " +
+            IMG + " VARCHAR(255))";
 
     public VpnHelper(Context context) {
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
@@ -33,9 +41,6 @@ public class VpnHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_SERVER);
-        db.execSQL("INSERT INTO server values (1,'sgdo.freevpn.net','Singapore','TCP',2,10,50)");
-        db.execSQL("INSERT INTO server values (2,'id.freevpn.net','Indonesia','UDP',2,10,25)");
-        db.execSQL("INSERT INTO server values (3,'jp.freevpn.net','Japan','TCP',2,7,10)");
     }
 
     @Override
