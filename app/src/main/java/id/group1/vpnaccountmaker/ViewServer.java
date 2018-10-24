@@ -21,6 +21,7 @@ import id.group1.vpnaccountmaker.helper.VpnHelper;
 public class ViewServer extends AppCompatActivity {
     private VpnHelper dbHelper;
     private Button create;
+    String img, sv, sl;
     private TextView server, location, port, max, acc, active;
     private int id_server, rAcc;
 
@@ -63,20 +64,27 @@ public class ViewServer extends AppCompatActivity {
             active.setText(cursor.getString(5)+" Days");
             acc.setText(cursor.getString(6)+" Account/Days");
             rAcc = cursor.getInt(6);
+            img = cursor.getString(7);
+            sl = cursor.getString(2);
+            sv = cursor.getString(1);
         }
 
      create.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
              if (rAcc <= 0){
-                 Toast.makeText(getApplicationContext(),"Account VPN Sudah penuh",Toast.LENGTH_SHORT).show();
+                 Toast.makeText(getApplicationContext(),"Account VPN is full",Toast.LENGTH_SHORT).show();
              }else {
                  rAcc -= 1;
                  SQLiteDatabase db = dbHelper.getWritableDatabase();
                  db.execSQL("UPDATE server SET acc_remaining="+rAcc+" WHERE id_server="+id_server);
-                 Toast.makeText(getApplicationContext(),"Account VPN Berhasil dibuat",Toast.LENGTH_SHORT).show();
+                 Toast.makeText(getApplicationContext(),"Account VPN Successfull Created",Toast.LENGTH_SHORT).show();
                  MainActivity.homeActivity.RefreshData();
-                 finish();
+                 Intent i = new Intent(getApplicationContext(), CreateVpn.class);
+                 i.putExtra("img",img);
+                 i.putExtra("server",sv);
+                 i.putExtra("location",sl);
+                 startActivity(i);
              }
          }
      });

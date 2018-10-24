@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".CreateVpn">
+
+    <RelativeLayout
+        android:id="@+id/vserver"
+        android:layout_height="150dp"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        tools:layout_editor_absoluteY="0dp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/vimg_flag"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <TextView
+            android:id="@+id/vlocation"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="50dp"
+            android:layout_toRightOf="@id/vimg_flag"
+            android:text="Location"
+            android:textColor="@color/cardview_light_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/vserver_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/vlocation"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/vimg_flag"
+            android:text="sgdo.serverip.co"
+            android:textColor="#909090" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/vdetail"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/vserver"
+        android:layout_height="150dp"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        tools:layout_editor_absoluteY="0dp">
+        <TextView
+            android:id="@+id/vfeature"
+            android:text="Feature VPN"
+            android:textColor="@color/cardview_light_background"
+            android:layout_margin="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/vfeature"
+            android:layout_centerHorizontal="true"
+            android:background="@color/cardview_light_background" />
+        <TextView
+            android:id="@+id/vrule1"
+            android:textColor="@color/cardview_light_background"
+            android:text="> NO SPAM \n> NO HACKING\n> NO DOUBLE LOGIN\n> NO TRADING"
+            android:layout_margin="15dp"
+            android:layout_below="@id/vfeature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_margin="15dp"
+            android:textColor="@color/cardview_light_background"
+            android:text="> Up to 1Gbps\n> Accurate Location"
+            android:layout_toRightOf="@+id/vrule1"
+            android:layout_below="@id/vfeature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/vcondition"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/vdetail"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <TextView
+            android:id="@+id/vhow"
+            android:textColor="@color/cardview_light_background"
+            android:text="How to use VPN"
+            android:layout_margin="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/vhow"
+            android:layout_centerHorizontal="true"
+            android:background="@color/cardview_light_background" />
+
+        <TextView
+            android:textColor="@color/cardview_light_background"
+            android:text="1. Download OPEN VPN Client\n2. Download Configuration Vpn\n3. Insert servername, username and password\n4. Waiting for Autentication and check onipsaya.com"
+            android:layout_margin="15dp"
+            android:layout_below="@id/vhow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>

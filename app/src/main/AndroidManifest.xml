@@ -3,8 +3,8 @@
     package="id.group1.vpnaccountmaker">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,7 +21,8 @@
         </activity>
         <activity android:name=".ManageServer" />
         <activity android:name=".ViewServer" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".CreateVpn"></activity>
     </application>
 
 </manifest>
