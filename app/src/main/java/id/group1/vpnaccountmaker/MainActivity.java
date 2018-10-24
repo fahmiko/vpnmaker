@@ -45,12 +45,16 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
             Toast.makeText(this,"Login Required",Toast.LENGTH_SHORT).show();
         }
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Logout");
+        getSupportActionBar().show();
+
         homeActivity = this;
         dbHelper = new VpnHelper(this);
 
         mRecyclerView = findViewById(R.id.recycler1);
         fa = findViewById(R.id.fab);
-        logout = findViewById(R.id.btn_logout);
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -107,15 +111,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(insert);
             }
         });
-
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                preference.logout();
-                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
-            }
-        });
-
     }
 
     public void RefreshData(){
@@ -138,5 +133,12 @@ public class MainActivity extends AppCompatActivity {
             } while (cursor.moveToNext());
         }
         return serverList;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        preference.logout();
+        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+        return true;
     }
 }
