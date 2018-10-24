@@ -24,15 +24,11 @@ Virtual Private Network (VPN) adalah sebuah teknologi komunikasi yang memungkink
 ------------
 
 #### Tampilan Aplikasi
-1. Login
-![Login](https://raw.githubusercontent.com/fahmiko/vpnmaker/master/image/login.png "Login")
+![Login](https://raw.githubusercontent.com/fahmiko/vpnmaker/master/image/login.png)
 
-1. Home
-![Home](https://raw.githubusercontent.com/fahmiko/vpnmaker/master/image/home_server.png "Home")
+![Home](https://raw.githubusercontent.com/fahmiko/vpnmaker/master/image/home_server.png)
 
-1. Update/Insert
-![](https://raw.githubusercontent.com/fahmiko/vpnmaker/master/image/insert_server.png)
+![Manage](https://raw.githubusercontent.com/fahmiko/vpnmaker/master/image/insert_server.png)
 
-1. View
-![View](https://raw.githubusercontent.com/fahmiko/vpnmaker/master/image/view_server.png "View")
+![View](https://raw.githubusercontent.com/fahmiko/vpnmaker/master/image/view_server.png)
 
