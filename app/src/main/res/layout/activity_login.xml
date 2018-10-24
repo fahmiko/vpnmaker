@@ -4,32 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    android:padding="5dp"
+    android:background="@drawable/gradient_bg"
     tools:context=".LoginActivity">
 
-    <EditText
-        android:id="@+id/txt_username"
-        android:hint="username"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <EditText
-        android:id="@+id/txt_password"
-        android:hint="password"
-        android:layout_below="@+id/txt_username"
-        android:inputType="textPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        >
 
-    <Button
-        android:id="@+id/btn_login"
-        android:background="@color/colorAccent"
-        android:text="Sign In"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/cardview_light_background"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/txt_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/login_logo"
+            android:src="@mipmap/ic_launcher"
+            android:layout_width="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="100dp" />
+        <EditText
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/login_logo"
+            android:id="@+id/txt_username"
+            android:hint="Username"
+            android:drawableLeft="@android:drawable/ic_dialog_email"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:textColor="@color/cardview_light_background"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/txt_password"
+            android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+            android:hint="  Password"
+            android:layout_below="@+id/txt_username"
+            android:textAlignment="center"
+            android:inputType="textPassword"
+            android:textColor="@color/cardview_light_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_login"
+            android:background="@color/colorAccent"
+            android:text="Sign In"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/cardview_light_background"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/txt_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

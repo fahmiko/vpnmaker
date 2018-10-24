@@ -59,9 +59,9 @@ public class ServerAdapter extends RecyclerView.Adapter<ServerAdapter.MyViewHold
             Uri uri = Uri.parse(server.getImg());
 
             holder.text_server.setText(server.getName_server());
-            holder.text_location.setText(server.getName_server());
+            holder.text_location.setText(server.getLocation());
             holder.text_port.setText(server.getPort());
-            holder.text_acc.setText(""+server.getAcc_remaining());
+            holder.text_acc.setText(""+server.getAcc_remaining()+" Account");
             holder.img_flag.setImageURI(uri);
         }
 

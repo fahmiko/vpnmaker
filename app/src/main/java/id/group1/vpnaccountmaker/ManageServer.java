@@ -1,6 +1,5 @@
 package id.group1.vpnaccountmaker;
 
-import android.app.VoiceInteractor;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,15 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.FileInputStream;
+import android.widget.Toolbar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.group1.vpnaccountmaker.helper.VpnHelper;
@@ -34,6 +29,7 @@ public class ManageServer extends AppCompatActivity {
     private CircleImageView img;
     private static final int PICK_IMAGE=100;
     private int id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,22 +37,63 @@ public class ManageServer extends AppCompatActivity {
 
         // Instansiasi Kelas Database Helper
         dbHelper = new VpnHelper(this);
+        // Instansiasi Komponen layout
+        initComponents();
+        // Setting Custom Toolbar
+        setCustomToolbar();
+        getUpdate();
 
-        // Menghubungkan variabel edittext ke layout
-        ns = findViewById(R.id.txt_nserver);
-        location = findViewById(R.id.txt_location);
-        acc = findViewById(R.id.txt_acc);
-        max = findViewById(R.id.txt_maxlogin);
-        active = findViewById(R.id.txt_active);
-        protocol = findViewById(R.id.radioPort);
-        img = findViewById(R.id.image_manage);
+        // Set aksi tombol save
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int idRadio = protocol.getCheckedRadioButtonId();
+                RadioButton radioButton = findViewById(idRadio);
+                if (!checkValidation()){
+                    Toast.makeText(getApplicationContext(),"Failed",Toast.LENGTH_LONG).show();
+                }else{
+                    SQLiteDatabase db = dbHelper.getWritableDatabase();
+                    // Jika melakukan insert
+                    if(nameActivity.equals("Update")){
+                        db.execSQL("UPDATE server SET name_server='"+ns.getText().toString()+"', " +
+                                "location='"+location.getText().toString()+"', " +
+                                "port='"+radioButton.getText().toString()+"', " +
+                                "max_login="+Integer.parseInt(max.getText().toString())+", " +
+                                "active="+Integer.parseInt(active.getText().toString())+", " +
+                                "acc_remaining="+Integer.parseInt(acc.getText().toString())+", " +
+                                "img='"+path+"' "+
+                                "WHERE id_server="+id);
+                        Toast.makeText(getApplicationContext(),"Data berhasil diupdate",Toast.LENGTH_SHORT).show();
+                        MainActivity.homeActivity.RefreshData();
+                        finish();
+                    }else{
+                        // Jika melakukan update
+                        db.execSQL("INSERT INTO server (name_server,location,port,max_login,active,acc_remaining,img) VALUES('"+
+                                ns.getText().toString()+"','"+
+                                location.getText().toString()+"','"+
+                                radioButton.getText().toString()+"',"+
+                                Integer.parseInt(max.getText().toString())+","+
+                                Integer.parseInt(active.getText().toString())+", "+
+                                Integer.parseInt(acc.getText().toString())+", '"+
+                                path+"')");
+                        Toast.makeText(getApplicationContext(),"Data berhasil Ditambahkan",Toast.LENGTH_SHORT).show();
+                        MainActivity.homeActivity.RefreshData();
+                        finish();
+                    }
+                }
+            }
+        });
 
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_PICK, Uri.parse("content://media/internal/images/media"));
+                startActivityForResult(i, PICK_IMAGE);
+            }
+        });
+    }
 
-        // Menghubungkan variabel button ke layout
-        back = findViewById(R.id.btn_back);
-        save = findViewById(R.id.btn_save);
-        upload = findViewById(R.id.btn_upload);
-
+    private void getUpdate(){
         // Mendapatkan Intent dari activity
         final Intent intent = getIntent();
         // Jika Berhasil mendapatkan intent
@@ -76,67 +113,35 @@ public class ManageServer extends AppCompatActivity {
                 this.path = cursor.getString(7);
             }
 
-            nameActivity = "Update";
+            this.nameActivity = "Update";
             getSupportActionBar().setTitle(nameActivity);
             save.setText(nameActivity);
         }else{
             this.path = null;
-            nameActivity = "Insert";
+            this.nameActivity = "Insert";
             getSupportActionBar().setTitle(nameActivity);
         }
+    }
+
+    private void initComponents(){
+        // Menghubungkan variabel edittext ke layout
+        ns = findViewById(R.id.txt_nserver);
+        location = findViewById(R.id.txt_location);
+        acc = findViewById(R.id.txt_acc);
+        max = findViewById(R.id.txt_maxlogin);
+        active = findViewById(R.id.txt_active);
+        protocol = findViewById(R.id.radioPort);
+        img = findViewById(R.id.image_manage);
 
 
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int idRadio = protocol.getCheckedRadioButtonId();
-                RadioButton radioButton = findViewById(idRadio);
-                if (!checkValidation()){
-                    Toast.makeText(getApplicationContext(),"Failed",Toast.LENGTH_LONG).show();
-                }else{
-                    SQLiteDatabase db = dbHelper.getWritableDatabase();
-                    if(nameActivity.equals("Update")){
-                        db.execSQL("UPDATE server SET name_server='"+ns.getText().toString()+"', " +
-                                "location='"+location.getText().toString()+"', " +
-                                "port='"+radioButton.getText().toString()+"', " +
-                                "max_login="+Integer.parseInt(max.getText().toString())+", " +
-                                "active="+Integer.parseInt(active.getText().toString())+", " +
-                                "acc_remaining="+Integer.parseInt(acc.getText().toString())+", " +
-                                "img='"+path+"' "+
-                                "WHERE id_server="+id);
-                        Toast.makeText(getApplicationContext(),"Data berhasil diupdate",Toast.LENGTH_SHORT).show();
-                        MainActivity.homeActivity.RefreshData();
-                        finish();
-                    }else{
-                        db.execSQL("INSERT INTO server (name_server,location,port,max_login,active,acc_remaining,img) VALUES('"+
-                                ns.getText().toString()+"','"+
-                                location.getText().toString()+"','"+
-                                radioButton.getText().toString()+"',"+
-                                Integer.parseInt(max.getText().toString())+","+
-                                Integer.parseInt(active.getText().toString())+", "+
-                                Integer.parseInt(acc.getText().toString())+", '"+
-                                path+"')");
-                        Toast.makeText(getApplicationContext(),"Data berhasil Ditambahkan",Toast.LENGTH_SHORT).show();
-                        MainActivity.homeActivity.RefreshData();
-                        finish();
-                    }
-                }
-            }
-        });
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        // Menghubungkan variabel button ke layout
+        save = findViewById(R.id.btn_save);
+        upload = findViewById(R.id.btn_upload);
+    }
 
-        upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_PICK, Uri.parse("content://media/internal/images/media"));
-                startActivityForResult(i, PICK_IMAGE);
-            }
-        });
+    private void setCustomToolbar(){
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().isShowing();
     }
 
     private boolean checkValidation(){
@@ -173,4 +178,9 @@ public class ManageServer extends AppCompatActivity {
         return uri.getPath();
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
 }

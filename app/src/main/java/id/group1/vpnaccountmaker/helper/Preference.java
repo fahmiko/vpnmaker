@@ -15,23 +15,27 @@ import id.group1.vpnaccountmaker.MainActivity;
 import id.group1.vpnaccountmaker.ManageServer;
 
 public class Preference {
-    VpnHelper dbHelper;
     Context context;
 
     public Preference(Context context) {
-        dbHelper = new VpnHelper(context);
         this.context = context;
     }
 
     public boolean login(String username, String password){
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM users WHERE username='"+username+"' AND password='"+password+"'",null);
-        if(cursor.getCount() != 0){
+        if(username.equals("admin") && password.equals("admin")){
             saveCredentials(username,password);
             return true;
         }else {
             return false;
         }
+    }
+
+    public void logout(){
+        SharedPreferences sf = context.getSharedPreferences("login",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sf.edit();
+        editor.remove("username");
+        editor.remove("password");
+        editor.apply();
     }
 
     public void saveCredentials(String username, String password){

@@ -1,102 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    >
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image_flag"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        android:src="@mipmap/ic_launcher"
+        app:civ_border_color="@color/colorPrimary"
+        app:civ_border_width="1dp" />
 
     <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
+        android:id="@+id/card_server"
+        android:layout_toEndOf="@id/image_flag"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        app:cardBackgroundColor="@color/colorPrimary"
         app:cardCornerRadius="6dp"
         app:cardElevation="5dp"
         app:cardUseCompatPadding="true"
-        app:contentPadding="6dp">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/image_flag"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@mipmap/ic_launcher"
-            app:civ_border_color="@color/colorPrimary"
-            app:civ_border_width="1dp"
-            android:layout_marginTop="10dp"
-            />
-
+        app:contentPadding="6dp"
+        >
         <RelativeLayout
             android:layout_gravity="end"
-            android:layout_width="239dp"
-            android:layout_height="130dp">
+            android:layout_width="match_parent"
+            android:layout_margin="5dp"
+            android:layout_height="90dp">
 
             <TextView
                 android:id="@+id/nameServer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/colorEdgeEffect"
-                android:text="nama Server VPN"
-                android:textAlignment="center"
-                android:textColor="@android:color/background_light" />
-
-            <TextView
-                android:id="@+id/titleLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_alignTop="@+id/location"
-                android:layout_marginLeft="15dp"
-                android:text="Location            : " />
+                android:layout_alignParentTop="true"
+                android:text="Nama Server VPN"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="20dp" />
+            <View
+                android:id="@+id/line_server"
+                android:layout_below="@id/nameServer"
+                android:background="@color/cardview_light_background"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
+
+            <ImageView
+                android:id="@+id/titleLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_below="@id/line_server"
+                android:layout_alignParentStart="true"
+                android:src="@android:drawable/ic_dialog_map" />
 
             <TextView
                 android:id="@+id/location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="7dp"
+                android:layout_below="@id/nameServer"
                 android:layout_toEndOf="@id/titleLocation"
                 android:text="Lokasi"
+                android:layout_marginLeft="10dp"
                 android:textAlignment="textStart"
+                android:textColor="@color/cardview_light_background"
                 android:textSize="14sp" />
 
-            <TextView
+            <ImageView
                 android:id="@+id/titlePort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignTop="@+id/port"
-                android:layout_marginLeft="15dp"
-                android:text="Dropbear Port   : " />
+                android:src="@android:drawable/ic_menu_preferences"/>
 
             <TextView
                 android:id="@+id/port"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="65dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/cardview_light_background"
                 android:layout_toEndOf="@id/titlePort"
                 android:text="Port"
                 android:textAlignment="textStart"
                 android:textSize="14sp" />
 
-            <TextView
+            <ImageView
                 android:id="@+id/titleRemaining"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignTop="@+id/accRemaining"
-                android:layout_marginLeft="15dp"
-                android:text="Acc Remaining : " />
+                android:layout_alignEnd="@+id/accRemaining"
+                android:layout_alignTop="@+id/location"
+                android:src="@android:drawable/ic_popup_disk_full" />
 
             <TextView
                 android:id="@+id/accRemaining"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="90dp"
-                android:layout_toEndOf="@id/titleRemaining"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="51dp"
                 android:text="Tersedia"
-                android:textAlignment="textStart"
                 android:textColor="@android:color/holo_green_light" />
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
-
-</LinearLayout>
+    <View
+        android:layout_below="@id/card_server"
+        android:layout_width="match_parent"
+        android:background="@drawable/gradient"
+        android:layout_height="1dp"></View>
+</RelativeLayout>

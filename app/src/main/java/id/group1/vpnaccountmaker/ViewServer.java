@@ -43,6 +43,10 @@ public class ViewServer extends AppCompatActivity {
        acc = findViewById(R.id.dt_limit);
        create = findViewById(R.id.button_create);
 
+       // Set action bar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().show();
+
        // Instansiasi dan mendapatkan data dari SQLite Database
         dbHelper = new VpnHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -71,5 +75,11 @@ public class ViewServer extends AppCompatActivity {
              }
          }
      });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

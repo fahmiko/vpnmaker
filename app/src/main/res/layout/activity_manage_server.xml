@@ -11,9 +11,11 @@
     <EditText
         android:id="@+id/txt_nserver"
         android:hint="Name Server"
+        android:drawableRight="@android:drawable/ic_menu_myplaces"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <EditText
+        android:drawableRight="@android:drawable/ic_menu_compass"
         android:id="@+id/txt_location"
         android:hint="Location"
         android:layout_below="@+id/txt_nserver"
@@ -21,6 +23,7 @@
         android:layout_height="wrap_content" />
     <EditText
         android:id="@+id/txt_acc"
+        android:drawableRight="@android:drawable/ic_menu_agenda"
         android:hint="Account Remaining"
         android:layout_below="@+id/txt_location"
         android:layout_width="match_parent"
@@ -34,6 +37,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/txt_acc"
         android:textSize="@dimen/fab_margin"
+        android:textColor="@color/cardview_light_background"
         android:text="Protocol  "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -53,10 +57,12 @@
                 android:id="@+id/rtcp"
                 android:checked="true"
                 android:text="TCP"
+                android:textColor="@color/cardview_light_background"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <RadioButton
                 android:id="@+id/rudp"
+                android:textColor="@color/cardview_light_background"
                 android:text="UDP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -65,6 +71,7 @@
 
     <EditText
         android:id="@+id/txt_maxlogin"
+        android:drawableRight="@android:drawable/ic_menu_month"
         android:layout_below="@+id/groupProtocol"
         android:hint="Max Login"
         android:inputType="number"
@@ -73,6 +80,7 @@
 
     <EditText
         android:id="@+id/txt_active"
+        android:drawableRight="@android:drawable/ic_menu_recent_history"
         android:layout_below="@+id/txt_maxlogin"
         android:inputType="number"
         android:hint="Active"
@@ -82,15 +90,9 @@
         android:id="@+id/btn_save"
         android:text="Save"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/btn_back"
-        android:text="Kembali"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:shadowColor="@color/cardview_shadow_start_color"
+        android:background="@color/colorAccent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

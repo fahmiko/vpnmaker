@@ -12,22 +12,23 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import id.group1.vpnaccountmaker.adapter.ServerAdapter;
 import id.group1.vpnaccountmaker.helper.ClickListenner;
+import id.group1.vpnaccountmaker.helper.Preference;
 import id.group1.vpnaccountmaker.helper.RecyclerTouchListener;
 import id.group1.vpnaccountmaker.helper.VpnHelper;
 import id.group1.vpnaccountmaker.model.ServerModel;
 
 public class MainActivity extends AppCompatActivity {
     private VpnHelper dbHelper;
+    private Preference preference;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private FloatingActionButton fa;
+    private FloatingActionButton fa,logout;
     public static MainActivity homeActivity;
     private List<ServerModel> myServer;
 
@@ -36,15 +37,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        preference = new Preference(this);
+        if(!preference.checkSavedCredetential()) {
+            Intent i = new Intent(getApplicationContext(),LoginActivity.class);
+            startActivity(i);
+            Toast.makeText(this,"Login Required",Toast.LENGTH_SHORT).show();
+        }
         homeActivity = this;
         dbHelper = new VpnHelper(this);
 
         mRecyclerView = findViewById(R.id.recycler1);
         fa = findViewById(R.id.fab);
+        logout = findViewById(R.id.btn_logout);
 
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         RefreshData();
 
@@ -63,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
                 final CharSequence[] dialogitem = {"View Server","Update Server","Delete Server"};
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
-                builder.setTitle("Pilihan");
                 builder.setItems(dialogitem, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -100,13 +106,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                preference.logout();
+                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+            }
+        });
+
     }
 
     public void RefreshData(){
         this.myServer = new ArrayList<>();
         myServer.addAll(getAll());
-        mAdapter = new ServerAdapter(myServer);
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(new ServerAdapter(myServer));
     }
 
     public List<ServerModel> getAll(){
