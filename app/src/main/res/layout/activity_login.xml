@@ -15,7 +15,7 @@
 
         <ImageView
             android:id="@+id/login_logo"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/logo"
             android:layout_width="100dp"
             android:layout_centerHorizontal="true"
             android:layout_height="100dp" />

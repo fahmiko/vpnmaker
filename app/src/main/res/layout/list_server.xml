@@ -21,22 +21,23 @@
         app:civ_border_width="1dp" />
 
     <android.support.v7.widget.CardView
+        android:alpha="0.8"
         android:id="@+id/card_server"
-        android:layout_toEndOf="@id/image_flag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        app:cardBackgroundColor="@color/colorPrimary"
+        android:layout_toEndOf="@id/image_flag"
+        app:cardBackgroundColor="#292a64"
         app:cardCornerRadius="6dp"
         app:cardElevation="5dp"
         app:cardUseCompatPadding="true"
-        app:contentPadding="6dp"
-        >
+        app:contentPadding="6dp">
+
         <RelativeLayout
-            android:layout_gravity="end"
             android:layout_width="match_parent"
-            android:layout_margin="5dp"
-            android:layout_height="90dp">
+            android:layout_height="60dp"
+            android:layout_gravity="end"
+            android:layout_margin="5dp">
 
             <TextView
                 android:id="@+id/nameServer"
@@ -46,78 +47,82 @@
                 android:layout_alignParentTop="true"
                 android:text="Nama Server VPN"
                 android:textColor="@color/cardview_light_background"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
+
             <View
                 android:id="@+id/line_server"
-                android:layout_below="@id/nameServer"
-                android:background="@color/cardview_light_background"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"/>
+                android:layout_height="1dp"
+                android:layout_below="@id/nameServer"
+                android:background="@color/cardview_light_background" />
 
 
             <ImageView
                 android:id="@+id/titleLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:layout_below="@id/line_server"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_alignParentStart="true"
+                android:layout_below="@id/line_server"
+                android:layout_marginTop="2dp"
                 android:src="@android:drawable/ic_dialog_map" />
 
             <TextView
                 android:id="@+id/location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
                 android:layout_below="@id/nameServer"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_toEndOf="@id/titleLocation"
                 android:text="Lokasi"
-                android:layout_marginLeft="10dp"
                 android:textAlignment="textStart"
                 android:textColor="@color/cardview_light_background"
                 android:textSize="14sp" />
 
             <ImageView
                 android:id="@+id/titlePort"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignTop="@+id/port"
-                android:src="@android:drawable/ic_menu_preferences"/>
+                android:src="@android:drawable/ic_menu_preferences" />
 
             <TextView
                 android:id="@+id/port"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="65dp"
                 android:layout_marginLeft="10dp"
-                android:textColor="@color/cardview_light_background"
+                android:layout_marginTop="45dp"
                 android:layout_toEndOf="@id/titlePort"
                 android:text="Port"
                 android:textAlignment="textStart"
+                android:textColor="@color/cardview_light_background"
                 android:textSize="14sp" />
 
             <ImageView
                 android:id="@+id/titleRemaining"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/accRemaining"
-                android:layout_alignTop="@+id/location"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/titleLocation"
+                android:layout_marginEnd="76dp"
                 android:src="@android:drawable/ic_popup_disk_full" />
 
             <TextView
                 android:id="@+id/accRemaining"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="51dp"
+                android:layout_below="@+id/titleLocation"
+                android:layout_marginEnd="13dp"
                 android:text="Tersedia"
                 android:textColor="@android:color/holo_green_light" />
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
+
     <View
+        android:layout_marginTop="5dp"
         android:layout_below="@id/card_server"
         android:layout_width="match_parent"
         android:background="@drawable/gradient"

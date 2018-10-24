@@ -1,6 +1,37 @@
-VPN Account Maker - Group 1
+#### VPN Account Maker - Group 1
 
 ------------
 
 - Alfianti Widyastuti
 - Fahmiko Purnama Putra
+
+
+------------
+
+#### Apa Itu VPN ?
+Virtual Private Network (VPN) adalah sebuah teknologi komunikasi yang memungkinkan untuk dapat terkoneksi ke jaringan public dan menggunakannya untuk dapat bergabung dengan jaringan local. Dengan cara tersebut maka akan didapatkan hak dan pengaturan yang sama seperti halnya berada didalam LAN itu sendiri, walaupun sebenarnya menggunakan jaringan milik public.
+
+------------
+
+#### Fitur Aplkasi
+- List Server
+- Create Account
+- Insert Server
+- Update Server
+- Login Automatically
+- Logout
+
+------------
+
+#### Tampilan Aplikasi
+1. Tampilan Login
+![Login](https://raw.githubusercontent.com/fahmiko/vpnmaker/master/image/login.png"Login")
+
+1. Tampilan Home
+![Home](https://raw.githubusercontent.com/fahmiko/vpnmaker/master/image/home_server.png "Home")
+
+1. Update/Insert
+![](https://raw.githubusercontent.com/fahmiko/vpnmaker/master/image/insert_server.png)
+
+1. View
+![](https://raw.githubusercontent.com/fahmiko/vpnmaker/master/image/view_server.png)

@@ -6,21 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ViewServer">
 
-    <TextView
+    <ImageView
         android:id="@+id/label_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:textSize="20dp"
-        android:textColor="@color/colorPrimary"
-        android:text="Server : Location" />
+        android:src="@drawable/vpn_details"
+        android:layout_width="match_parent"
+        android:scaleType="fitXY"
+        android:layout_height="150dp" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/card"
         android:layout_width="300dp"
 
-        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardBackgroundColor="#292a64"
         android:layout_height="wrap_content"
         android:layout_below="@+id/label_location"
         android:layout_centerHorizontal="true"

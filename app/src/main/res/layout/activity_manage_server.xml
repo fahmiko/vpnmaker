@@ -114,6 +114,6 @@
         android:layout_marginLeft="20dp"
         android:layout_toEndOf="@id/btn_upload"
         android:padding="10dp"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/logo" />
 
 </RelativeLayout>

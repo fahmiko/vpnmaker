@@ -21,7 +21,8 @@ import id.group1.vpnaccountmaker.helper.VpnHelper;
 public class ViewServer extends AppCompatActivity {
     private VpnHelper dbHelper;
     private Button create;
-    private TextView titleServer, server, location, port, max, acc, active;
+    private TextView server, location, port, max, acc, active;
+    private int id_server, rAcc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,6 @@ public class ViewServer extends AppCompatActivity {
         // Mendapatkan intent dari Main Activity
        Intent intent = getIntent();
        // Set Variabel dengan Layout
-       titleServer = findViewById(R.id.label_location);
        server = findViewById(R.id.dt_server);
        location = findViewById(R.id.dt_location);
        port = findViewById(R.id.dt_protocol);
@@ -50,28 +50,33 @@ public class ViewServer extends AppCompatActivity {
        // Instansiasi dan mendapatkan data dari SQLite Database
         dbHelper = new VpnHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        int id_server = Integer.parseInt(intent.getStringExtra("id"));
+        this.id_server = Integer.parseInt(intent.getStringExtra("id"));
         Cursor cursor = db.rawQuery("SELECT * FROM server WHERE id_server="+id_server,null);
         if (cursor.getCount()>0){
             cursor.moveToPosition(0);
             // Set Variabel dengan Intent
-            titleServer.setText("Server : "+cursor.getString(2));
+            getSupportActionBar().setTitle("VPN Server "+cursor.getString(2));
             server.setText(cursor.getString(1));
             location.setText(cursor.getString(2));
             port.setText(cursor.getString(3));
             max.setText(cursor.getString(4)+"/Account");
             active.setText(cursor.getString(5)+" Days");
             acc.setText(cursor.getString(6)+" Account/Days");
+            rAcc = cursor.getInt(6);
         }
+
      create.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-             Preference pr = new Preference(getApplicationContext());
-             if(pr.checkSavedCredetential()){
-                 Snackbar.make(v,"Account Berhasil Dibuat",Snackbar.LENGTH_SHORT).show();
+             if (rAcc <= 0){
+                 Toast.makeText(getApplicationContext(),"Account VPN Sudah penuh",Toast.LENGTH_SHORT).show();
              }else {
-                 Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                 startActivity(i);
+                 rAcc -= 1;
+                 SQLiteDatabase db = dbHelper.getWritableDatabase();
+                 db.execSQL("UPDATE server SET acc_remaining="+rAcc+" WHERE id_server="+id_server);
+                 Toast.makeText(getApplicationContext(),"Account VPN Berhasil dibuat",Toast.LENGTH_SHORT).show();
+                 MainActivity.homeActivity.RefreshData();
+                 finish();
              }
          }
      });
