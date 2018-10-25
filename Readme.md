@@ -2,14 +2,27 @@
 
 ------------
 
-- Alfianti Widyastuti
-- Fahmiko Purnama Putra
+- Alfianti Widyastuti (02)
+- Fahmiko Purnama Putra (11)
 
 
 ------------
 
+
 #### Apa Itu VPN ?
 Virtual Private Network (VPN) adalah sebuah teknologi komunikasi yang memungkinkan untuk dapat terkoneksi ke jaringan public dan menggunakannya untuk dapat bergabung dengan jaringan local. Dengan cara tersebut maka akan didapatkan hak dan pengaturan yang sama seperti halnya berada didalam LAN itu sendiri, walaupun sebenarnya menggunakan jaringan milik public.
+
+------------
+#### List Class
+- Create Vpn.java 
+class ini berfungsi untuk membuat data baru 
+- Login activity 
+class ini berfungsi untuk masuk admin, yang kemudian masuk ke class Main activity untuk mengelola data edit, upload, dan delete
+- Manage server 
+form edit untuk data pada form admin (Main activity) 
+- View Server 
+melihat detail pada server
+
 
 ------------
 
