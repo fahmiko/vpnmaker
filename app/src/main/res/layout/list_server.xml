@@ -35,7 +35,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="65dp"
             android:layout_gravity="end"
             android:layout_margin="5dp">
 
@@ -94,7 +94,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="45dp"
                 android:layout_toEndOf="@id/titlePort"
-                android:text="Port"
+                android:text="Account Remaining"
                 android:textAlignment="textStart"
                 android:textColor="@color/cardview_light_background"
                 android:textSize="14sp" />
