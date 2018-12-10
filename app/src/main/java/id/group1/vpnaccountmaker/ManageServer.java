@@ -1,8 +1,12 @@
 package id.group1.vpnaccountmaker;
 
 import android.content.Intent;
+import id.group1.vpnaccountmaker.adapter.*;
+import id.group1.vpnaccountmaker.helper.*;
+import id.group1.vpnaccountmaker.model.*;
+import id.group1.vpnaccountmaker.rest.*;
+
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -16,111 +20,112 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.group1.vpnaccountmaker.helper.VpnHelper;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ManageServer extends AppCompatActivity {
-    private VpnHelper dbHelper;
-    private EditText ns, location, acc, max, active;
-    private RadioGroup protocol;
+    private EditText ns, location, acc;
     private Button back, save;
     private FloatingActionButton upload;
     private String nameActivity,path;
     private CircleImageView img;
-    private static final int PICK_IMAGE=100;
-    private int id;
+    private String id;
+    String imagePath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_server);
 
-        // Instansiasi Kelas Database Helper
-        dbHelper = new VpnHelper(this);
-        // Instansiasi Komponen layout
         initComponents();
-        // Setting Custom Toolbar
-        setCustomToolbar();
-        getUpdate();
+        checkUpdate();
 
-        // Set aksi tombol save
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int idRadio = protocol.getCheckedRadioButtonId();
-                RadioButton radioButton = findViewById(idRadio);
-                if (!checkValidation()){
-                    Toast.makeText(getApplicationContext(),"Failed",Toast.LENGTH_LONG).show();
-                }else{
-                    SQLiteDatabase db = dbHelper.getWritableDatabase();
-                    // Jika melakukan insert
-                    if(nameActivity.equals("Update")){
-                        db.execSQL("UPDATE server SET name_server='"+ns.getText().toString()+"', " +
-                                "location='"+location.getText().toString()+"', " +
-                                "port='"+radioButton.getText().toString()+"', " +
-                                "max_login="+Integer.parseInt(max.getText().toString())+", " +
-                                "active="+Integer.parseInt(active.getText().toString())+", " +
-                                "acc_remaining="+Integer.parseInt(acc.getText().toString())+", " +
-                                "img='"+path+"' "+
-                                "WHERE id_server="+id);
-                        Toast.makeText(getApplicationContext(),"Data berhasil diupdate",Toast.LENGTH_SHORT).show();
-                        MainActivity.homeActivity.RefreshData();
-                        finish();
-                    }else{
-                        // Jika melakukan update
-                        db.execSQL("INSERT INTO server (name_server,location,port,max_login,active,acc_remaining,img) VALUES('"+
-                                ns.getText().toString()+"','"+
-                                location.getText().toString()+"','"+
-                                radioButton.getText().toString()+"',"+
-                                Integer.parseInt(max.getText().toString())+","+
-                                Integer.parseInt(active.getText().toString())+", "+
-                                Integer.parseInt(acc.getText().toString())+", '"+
-                                path+"')");
-                        Toast.makeText(getApplicationContext(),"Data berhasil Ditambahkan",Toast.LENGTH_SHORT).show();
-                        MainActivity.homeActivity.RefreshData();
-                        finish();
-                    }
+                ApiInterface mApiInterface = ApiClient.getClient().create(ApiInterface.class);
+
+                MultipartBody.Part body = null;
+                if (!imagePath.isEmpty()){
+                    // Buat file dari image yang dipilih
+                    File file = new File(imagePath);
+
+                    // Buat RequestBody instance dari file
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpg"), file);
+
+                    // MultipartBody.Part digunakan untuk mendapatkan nama file
+                    body = MultipartBody.Part.createFormData("flag_image", file.getName(),
+                            requestFile);
                 }
-            }
-        });
+                RequestBody reqName_server = MultipartBody.create(MediaType.parse("multipart/form-data"),
+                        (ns.getText().toString().isEmpty())?"":ns.getText().toString());
+                RequestBody reqLocation = MultipartBody.create(MediaType.parse("multipart/form-data"),
+                        (location.getText().toString().isEmpty())?"":location.getText().toString());
+                RequestBody reqAcc_remaining = MultipartBody.create(MediaType.parse("multipart/form-data"),
+                        (acc.getText().toString().isEmpty())?"":acc.getText().toString());
+
+                Call<GetServer> mServerCall;
+
+                if(id!=null) {
+                    RequestBody reqId_server = MultipartBody.create(MediaType.parse("multipart/form-data"),
+                            (id.isEmpty())?"":id);
+                    RequestBody reqAction = MultipartBody.create(MediaType.parse("multipart/form-data"),
+                            "update");
+                    mServerCall = mApiInterface.putServer(body, reqId_server,reqName_server,
+                            reqLocation, reqAcc_remaining, reqAction );
+                }else{
+                    RequestBody reqAction = MultipartBody.create(MediaType.parse("multipart/form-data"),
+                            "insert");
+                    mServerCall = mApiInterface.postServer(body, reqName_server,
+                            reqLocation, reqAcc_remaining, reqAction );
+                }
+
+
+
+                mServerCall.enqueue(new Callback<GetServer>() {
+                    @Override
+                    public void onResponse(Call<GetServer> call, Response<GetServer> response) {
+//                      Log.d("Insert Retrofit",response.body().getMessage());
+                        if (response.body().getStatus().equals("failed")) {
+                            Toast.makeText(getApplicationContext(), "Proses Insert Gagal", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "UPDATE Success", Toast.LENGTH_SHORT).show();
+                            MainActivity.homeActivity.RefreshData();
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetServer> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), "UPDATE Gagal", Toast.LENGTH_SHORT).show();
+                    }
+                    });
+                }
+            });
 
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_PICK, Uri.parse("content://media/internal/images/media"));
-                startActivityForResult(i, PICK_IMAGE);
+                    final Intent galleryIntent = new Intent();
+                    galleryIntent.setType("image/*");
+                    galleryIntent.setAction(Intent.ACTION_PICK);
+                    Intent intentChoose = Intent.createChooser(
+                            galleryIntent,
+                            "Pilih foto untuk di-upload");
+                    startActivityForResult(intentChoose, 10);
             }
         });
-    }
-
-    private void getUpdate(){
-        // Mendapatkan Intent dari activity
-        final Intent intent = getIntent();
-        // Jika Berhasil mendapatkan intent
-        if (intent.getStringExtra("id") != null){
-            this.id = Integer.parseInt(intent.getStringExtra("id"));
-            SQLiteDatabase db = dbHelper.getReadableDatabase();
-            Cursor cursor = db.rawQuery("SELECT * FROM server WHERE id_server = "+id,null);
-
-            if(cursor.getCount() > 0){
-                cursor.moveToPosition(0);
-                ns.setText(cursor.getString(1));
-                location.setText(cursor.getString(2));
-                max.setText(String.valueOf(cursor.getString(4)));
-                active.setText(String.valueOf(cursor.getString(5)));
-                acc.setText(String.valueOf(cursor.getString(6)));
-                img.setImageURI(Uri.parse(cursor.getString(7)));
-                this.path = cursor.getString(7);
-            }
-
-            this.nameActivity = "Update";
-            getSupportActionBar().setTitle(nameActivity);
-            save.setText(nameActivity);
-        }else{
-            this.path = null;
-            this.nameActivity = "Insert";
-            getSupportActionBar().setTitle(nameActivity);
-        }
     }
 
     private void initComponents(){
@@ -128,9 +133,6 @@ public class ManageServer extends AppCompatActivity {
         ns = findViewById(R.id.txt_nserver);
         location = findViewById(R.id.txt_location);
         acc = findViewById(R.id.txt_acc);
-        max = findViewById(R.id.txt_maxlogin);
-        active = findViewById(R.id.txt_active);
-        protocol = findViewById(R.id.radioPort);
         img = findViewById(R.id.image_manage);
 
 
@@ -139,16 +141,26 @@ public class ManageServer extends AppCompatActivity {
         upload = findViewById(R.id.btn_upload);
     }
 
-    private void setCustomToolbar(){
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().isShowing();
+    public void checkUpdate(){
+        Intent intent = getIntent();
+        if(intent.getStringExtra("id_server")==null){
+            getSupportActionBar().setTitle("Insert Server");
+            getSupportActionBar().show();
+        }else{
+            id = intent.getStringExtra("id_server");
+            getSupportActionBar().setTitle("UPDATE ID "+intent.getStringExtra("id_server"));
+            getSupportActionBar().show();
+            ns.setText(intent.getStringExtra("name_server"));
+            location.setText(intent.getStringExtra("location"));
+            acc.setText(intent.getStringExtra("acc_remaining"));
+            Glide.with(getApplicationContext()).load(ApiClient.BASE_URL+"uploads/"+intent.getStringExtra("flag_image")).into(img);
+            save.setText("Update");
+        }
     }
 
     private boolean checkValidation(){
         if(ns.getText().toString().equals("") || location.getText().toString().equals("") ||
-                acc.getText().toString().equals("") || (protocol.getCheckedRadioButtonId()) == 0 ||
-                max.getText().toString().equals("") || active.getText().equals("") ||
-                this.path.equals(null)){
+                acc.getText().toString().equals("")){
             return false;
         }else{
             return true;
@@ -156,31 +168,35 @@ public class ManageServer extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==RESULT_OK && requestCode==PICK_IMAGE){
-            Uri uri = data.getData();
-            String x = getPath(uri);
-            this.path = x;
-            img.setImageURI(Uri.parse(x));
-        }
-    }
-
-    private String getPath(Uri uri){
-        if(uri==null)return null;
-        String[] projection = {MediaStore.Images.Media.DATA};
-        Cursor cursor = managedQuery(uri,projection,null,null,null);
-        if(cursor!=null){
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        }
-        return uri.getPath();
-    }
-
-    @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode ==10){
+            if (data==null){
+                Toast.makeText(getApplicationContext(), "Foto gagal di-load", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                imagePath =cursor.getString(columnIndex);
+
+                Picasso.with(getApplicationContext()).load(new File(imagePath)).fit().into(img);
+//                Glide.with(mContext).load(new File(imagePath)).into(mImageView);
+                cursor.close();
+            }else{
+                Toast.makeText(getApplicationContext(), "Foto gagal di-load", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

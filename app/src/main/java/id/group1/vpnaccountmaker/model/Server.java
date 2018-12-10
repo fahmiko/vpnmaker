@@ -3,7 +3,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Server {
     @SerializedName("id_server")
-    private String idServer;
+    private String id_server;
     @SerializedName("name_server")
     private String name_server;
     @SerializedName("location")
@@ -16,7 +16,7 @@ public class Server {
 
 
     public Server(String idServer, String name_server, String location, String acc_remaining, String flag_image, String action) {
-        this.idServer = idServer;
+        this.id_server = idServer;
         this.name_server = name_server;
         this.location = location;
         this.acc_remaining = acc_remaining;
@@ -25,11 +25,11 @@ public class Server {
     }
 
     public String getIdServer() {
-        return idServer;
+        return id_server;
     }
 
     public void setIdServer(String idServer) {
-        this.idServer = idServer;
+        this.id_server = idServer;
     }
 
     public String getName_server() {

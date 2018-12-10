@@ -1,6 +1,9 @@
 package id.group1.vpnaccountmaker.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +13,13 @@ import android.widget.TextView;
 import java.util.List;
 import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
+import id.group1.vpnaccountmaker.MainActivity;
+import id.group1.vpnaccountmaker.ManageServer;
 import id.group1.vpnaccountmaker.R;
 import id.group1.vpnaccountmaker.model.Server;
 import id.group1.vpnaccountmaker.rest.ApiClient;
+import id.group1.vpnaccountmaker.helper.*;
+
 
 public class ServerAdapter extends RecyclerView.Adapter<ServerAdapter.MyViewHolder> {
     private Context context;
@@ -33,8 +40,9 @@ public class ServerAdapter extends RecyclerView.Adapter<ServerAdapter.MyViewHold
         }
 
         // Provide a suitable constructor (depends on the kind of dataset)
-        public ServerAdapter(List<Server> myServers) {
+        public ServerAdapter(List<Server> myServers, Context context) {
             this.myServers = myServers;
+            this.context = context;
         }
 
         // Create new views (invoked by the layout manager)
@@ -48,19 +56,15 @@ public class ServerAdapter extends RecyclerView.Adapter<ServerAdapter.MyViewHold
         }
 
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position) {
+        public void onBindViewHolder(MyViewHolder holder, final int position) {
             holder.text_server.setText(myServers.get(position).getName_server());
             holder.text_location.setText(myServers.get(position).getLocation());
             holder.text_acc.setText(myServers.get(position).getAcc_remaining());
             if (myServers.get(position).getFlag_image() != null) {
-//            Picasso.with(holder.itemView.getContext()).load(ApiClient.BASE_URL+listPembeli.get(position).getPhotoId())
-//                    .into(holder.mPhotoURL);
                 Glide.with(holder.itemView.getContext()).load(ApiClient.BASE_URL+"uploads/"+myServers.get
                         (position).getFlag_image())
                         .into(holder.img_flag);
             } else {
-//          Picasso.with(holder.itemView.getContext()).load(R.drawable.photoid).into(holder
-// .mPhotoURL);
                 Glide.with(holder.itemView.getContext()).load(R.drawable.logo).into(holder
                         .img_flag);
             }

@@ -30,62 +30,7 @@
         android:layout_height="wrap_content"
         android:inputType="number"/>
 
-    <TextView
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="20dp"
-        android:id="@+id/lb_protocol"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/txt_acc"
-        android:textSize="@dimen/fab_margin"
-        android:textColor="@color/cardview_light_background"
-        android:text="Protocol  "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
-    <RelativeLayout
-        android:id="@+id/groupProtocol"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/lb_protocol"
-        android:layout_below="@+id/txt_acc">
-
-        <RadioGroup
-            android:id="@+id/radioPort"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <RadioButton
-                android:id="@+id/rtcp"
-                android:checked="true"
-                android:text="TCP"
-                android:textColor="@color/cardview_light_background"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <RadioButton
-                android:id="@+id/rudp"
-                android:textColor="@color/cardview_light_background"
-                android:text="UDP"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RadioGroup>
-    </RelativeLayout>
-
-    <EditText
-        android:id="@+id/txt_maxlogin"
-        android:drawableRight="@android:drawable/ic_menu_month"
-        android:layout_below="@+id/groupProtocol"
-        android:hint="Max Login"
-        android:inputType="number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <EditText
-        android:id="@+id/txt_active"
-        android:drawableRight="@android:drawable/ic_menu_recent_history"
-        android:layout_below="@+id/txt_maxlogin"
-        android:inputType="number"
-        android:hint="Active"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
     <Button
         android:id="@+id/btn_save"
         android:text="Save"
@@ -101,7 +46,7 @@
         android:id="@+id/btn_upload"
         android:layout_marginTop="10dp"
         android:src="@android:drawable/ic_menu_upload"
-        android:layout_below="@+id/txt_active"
+        android:layout_below="@+id/txt_acc"
         android:layout_alignParentLeft="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -110,7 +55,7 @@
         android:id="@+id/image_manage"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_below="@+id/txt_active"
+        android:layout_below="@+id/txt_acc"
         android:layout_marginLeft="20dp"
         android:layout_toEndOf="@id/btn_upload"
         android:padding="10dp"

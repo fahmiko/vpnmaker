@@ -6,8 +6,11 @@ import id.group1.vpnaccountmaker.model.*;
 import id.group1.vpnaccountmaker.rest.*;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +21,9 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     Context mContext;
     private FloatingActionButton fa,logout;
     public static MainActivity homeActivity;
-    private List<Server> myServer;
+    private List<Server> listServer;
     ApiInterface mApiInterface;
 
     @Override
@@ -51,13 +57,72 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Logout");
+        getSupportActionBar().setTitle("Admin");
         getSupportActionBar().show();
 
         homeActivity = this;
         RefreshData();
 
+        fa = findViewById(R.id.fab);
+        fa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), ManageServer.class);
+                startActivity(i);
+            }
+        });
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), mRecyclerView, new ClickListenner() {
+            @Override
+            public void onClick(View v, int position) {
+
+            }
+
+            @Override
+            public void onLongClick(View v, int position) {
+                final Server server = listServer.get(position);
+                final CharSequence[] dialogitem = {"View Server","Update Server","Delete Server"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+                builder.setItems(dialogitem, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case 1:
+                                Intent i = new Intent(getApplicationContext(), ManageServer.class);
+                                i.putExtra("id_server",String.valueOf(server.getIdServer()));
+                                i.putExtra("name_server",server.getName_server());
+                                i.putExtra("location",server.getLocation());
+                                i.putExtra("acc_remaining",server.getAcc_remaining());
+                                i.putExtra("flag_image",server.getFlag_image());
+                                startActivity(i);
+                                break;
+                                case 2:
+                                    RequestBody reqIdServer =
+                                            MultipartBody.create(MediaType.parse("multipart/form-data"),
+                                                    (server.getIdServer().isEmpty())?
+                                                            "" : server.getIdServer());
+                                    RequestBody reqAction =
+                                            MultipartBody.create(MediaType.parse("multipart/form-data"), "delete");
+
+                                    Call<GetServer> callDelete = mApiInterface.deleteServer(reqIdServer,reqAction);
+                                    callDelete.enqueue(new Callback<GetServer>() {
+                                        @Override
+                                        public void onResponse(Call<GetServer> call, Response<GetServer> response) {
+                                            RefreshData();
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<GetServer> call, Throwable t) {
+
+                                        }
+                                    });
+                                    break;
+                        }
+                    }
+                }).create().show();
+            }
+        }));
     }
 
     public void RefreshData(){
@@ -67,8 +132,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GetServer> call, Response<GetServer> response) {
                 Log.d("Get Server",response.body().getStatus());
-                List<Server> listServer = response.body().getResult();
-                mAdapter = new ServerAdapter(listServer);
+                listServer = response.body().getResult();
+                mAdapter = new ServerAdapter(listServer,getApplicationContext());
                 mRecyclerView.setAdapter(mAdapter);
             }
 
@@ -77,13 +142,5 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("Get Server",t.getMessage());
             }
         });
-    }
-
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        preference.logout();
-        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
-        return true;
     }
 }
