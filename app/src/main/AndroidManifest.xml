@@ -24,7 +24,9 @@
         <activity android:name=".ManageServer" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".UserActivity" />
-        <activity android:name=".ManageUser"></activity>
+        <activity android:name=".ManageUser" />
+        <activity android:name=".AccountActivity" />
+        <activity android:name=".ManageAcc"></activity>
     </application>
 
 </manifest>

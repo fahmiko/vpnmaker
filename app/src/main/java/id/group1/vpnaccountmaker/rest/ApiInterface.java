@@ -69,4 +69,34 @@ public interface ApiInterface {
     Call<GetUser> deleteUser(
             @Part("id_user") RequestBody id_user,
             @Part("action") RequestBody action);
+
+    @GET("vpn/all")
+    Call<GetAcc> getAcc();
+
+    @Multipart
+    @POST("vpn/all")
+    Call<GetAcc> postAcc(
+            @Part MultipartBody.Part file,
+            @Part("user") RequestBody user,
+            @Part("server") RequestBody server,
+            @Part("active") RequestBody active,
+            @Part("action") RequestBody action
+    );
+
+    @Multipart
+    @POST("vpn/all")
+    Call<GetAcc> putAcc(
+            @Part MultipartBody.Part file,
+            @Part("id") RequestBody id,
+            @Part("user") RequestBody user,
+            @Part("server") RequestBody server,
+            @Part("active") RequestBody active,
+            @Part("action") RequestBody action
+    );
+
+    @Multipart
+    @POST("vpn/all")
+    Call<GetAcc> deleteAcc(
+            @Part("id") RequestBody id,
+            @Part("action") RequestBody action);
 }

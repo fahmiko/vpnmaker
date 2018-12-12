@@ -24,6 +24,10 @@ public class MenuItem extends AppCompatActivity {
                 mIntent = new Intent(this,UserActivity.class);
                 startActivity(mIntent);
                 return true;
+            case R.id.menuDtAcc:
+                mIntent = new Intent(this,AccountActivity.class);
+                startActivity(mIntent);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:layout_margin="10dp"
+    tools:context=".ManageAcc">
+
+    <EditText
+        android:id="@+id/macc_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableRight="@android:drawable/ic_menu_sort_alphabetically"
+        android:hint="Id User" />
+
+    <EditText
+        android:id="@+id/macc_server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/macc_user"
+        android:drawableRight="@android:drawable/ic_menu_info_details"
+        android:hint="Id Server" />
+
+    <EditText
+        android:id="@+id/macc_active"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/macc_server"
+        android:clickable="true"
+        android:editable="false"
+        android:drawableRight="@android:drawable/ic_lock_idle_lock"
+        android:hint="Active Date" />
+
+
+    <Button
+        android:id="@+id/btn_save"
+        android:text="Save"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:shadowColor="@color/cardview_shadow_start_color"
+        android:background="@color/colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
