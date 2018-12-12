@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:layout_margin="10dp"
+    tools:context=".ManageUser">
+
+    <EditText
+        android:id="@+id/txt_fname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableRight="@android:drawable/ic_menu_sort_alphabetically"
+        android:hint="Full Name" />
+
+    <EditText
+        android:id="@+id/txt_uname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_fname"
+        android:drawableRight="@android:drawable/ic_menu_info_details"
+        android:hint="Username" />
+
+    <EditText
+        android:id="@+id/txt_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_uname"
+        android:drawableRight="@android:drawable/ic_lock_idle_lock"
+        android:hint="Password"
+        android:inputType="number" />
+
+
+    <Button
+        android:id="@+id/btn_save"
+        android:text="Save"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:shadowColor="@color/cardview_shadow_start_color"
+        android:background="@color/colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:text="Upload"
+        android:id="@+id/btn_upload"
+        android:layout_marginTop="10dp"
+        android:src="@android:drawable/ic_menu_upload"
+        android:layout_below="@+id/txt_pass"
+        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image_manage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/txt_pass"
+        android:layout_marginLeft="20dp"
+        android:layout_toEndOf="@id/btn_upload"
+        android:padding="10dp"
+        android:src="@drawable/logo" />
+
+</RelativeLayout>

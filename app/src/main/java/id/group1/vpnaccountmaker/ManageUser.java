@@ -34,8 +34,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ManageServer extends AppCompatActivity {
-    private EditText ns, location, acc;
+public class ManageUser extends AppCompatActivity {
+    private EditText fn, uname, pass;
     private Button back, save;
     private FloatingActionButton upload;
     private String nameActivity,path;
@@ -46,7 +46,7 @@ public class ManageServer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_server);
+        setContentView(R.layout.activity_manage_user);
 
         initComponents();
         checkUpdate();
@@ -65,74 +65,74 @@ public class ManageServer extends AppCompatActivity {
                     RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpg"), file);
 
                     // MultipartBody.Part digunakan untuk mendapatkan nama file
-                    body = MultipartBody.Part.createFormData("flag_image", file.getName(),
+                    body = MultipartBody.Part.createFormData("photo", file.getName(),
                             requestFile);
                 }
-                RequestBody reqName_server = MultipartBody.create(MediaType.parse("multipart/form-data"),
-                        (ns.getText().toString().isEmpty())?"":ns.getText().toString());
+                RequestBody reqName_user = MultipartBody.create(MediaType.parse("multipart/form-data"),
+                        (fn.getText().toString().isEmpty())?"":fn.getText().toString());
                 RequestBody reqLocation = MultipartBody.create(MediaType.parse("multipart/form-data"),
-                        (location.getText().toString().isEmpty())?"":location.getText().toString());
+                        (uname.getText().toString().isEmpty())?"":uname.getText().toString());
                 RequestBody reqAcc_remaining = MultipartBody.create(MediaType.parse("multipart/form-data"),
-                        (acc.getText().toString().isEmpty())?"":acc.getText().toString());
+                        (pass.getText().toString().isEmpty())?"":pass.getText().toString());
 
-                Call<GetServer> mServerCall;
+                Call<GetUser> mUserCall;
 
                 if(id!=null) {
-                    RequestBody reqId_server = MultipartBody.create(MediaType.parse("multipart/form-data"),
+                    RequestBody reqId_user = MultipartBody.create(MediaType.parse("multipart/form-data"),
                             (id.isEmpty())?"":id);
                     RequestBody reqAction = MultipartBody.create(MediaType.parse("multipart/form-data"),
                             "update");
-                    mServerCall = mApiInterface.putServer(body, reqId_server,reqName_server,
+                    mUserCall = mApiInterface.putUser(body, reqId_user,reqName_user,
                             reqLocation, reqAcc_remaining, reqAction );
                 }else{
                     RequestBody reqAction = MultipartBody.create(MediaType.parse("multipart/form-data"),
                             "insert");
-                    mServerCall = mApiInterface.postServer(body, reqName_server,
+                    mUserCall = mApiInterface.postUser(body, reqName_user,
                             reqLocation, reqAcc_remaining, reqAction );
                 }
 
 
 
-                mServerCall.enqueue(new Callback<GetServer>() {
+                mUserCall.enqueue(new Callback<GetUser>() {
                     @Override
-                    public void onResponse(Call<GetServer> call, Response<GetServer> response) {
+                    public void onResponse(Call<GetUser> call, Response<GetUser> response) {
 //                      Log.d("Insert Retrofit",response.body().getMessage());
                         if (response.body().getStatus().equals("failed")) {
                             Toast.makeText(getApplicationContext(), "Proses Insert Gagal", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getApplicationContext(), "UPDATE Success", Toast.LENGTH_SHORT).show();
-                            MainActivity.homeActivity.RefreshData();
+                            UserActivity.userActivity.RefreshData();
                             finish();
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<GetServer> call, Throwable t) {
+                    public void onFailure(Call<GetUser> call, Throwable t) {
                         Toast.makeText(getApplicationContext(), "UPDATE Gagal", Toast.LENGTH_SHORT).show();
                     }
-                    });
-                }
-            });
+                });
+            }
+        });
 
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    final Intent galleryIntent = new Intent();
-                    galleryIntent.setType("image/*");
-                    galleryIntent.setAction(Intent.ACTION_PICK);
-                    Intent intentChoose = Intent.createChooser(
-                            galleryIntent,
-                            "Pilih foto untuk di-upload");
-                    startActivityForResult(intentChoose, 10);
+                final Intent galleryIntent = new Intent();
+                galleryIntent.setType("image/*");
+                galleryIntent.setAction(Intent.ACTION_PICK);
+                Intent intentChoose = Intent.createChooser(
+                        galleryIntent,
+                        "Pilih foto untuk di-upload");
+                startActivityForResult(intentChoose, 10);
             }
         });
     }
 
     private void initComponents(){
         // Menghubungkan variabel edittext ke layout
-        ns = findViewById(R.id.txt_nserver);
-        location = findViewById(R.id.txt_location);
-        acc = findViewById(R.id.txt_acc);
+        fn = findViewById(R.id.txt_fname);
+        uname = findViewById(R.id.txt_uname);
+        pass = findViewById(R.id.txt_pass);
         img = findViewById(R.id.image_manage);
 
 
@@ -143,15 +143,15 @@ public class ManageServer extends AppCompatActivity {
 
     public void checkUpdate(){
         Intent intent = getIntent();
-        if(intent.getStringExtra("id_server")==null){
-            getSupportActionBar().setTitle("Insert Server");
+        if(intent.getStringExtra("id_user")==null){
+            getSupportActionBar().setTitle("Insert User");
         }else{
-            id = intent.getStringExtra("id_server");
-            getSupportActionBar().setTitle("Update Id "+intent.getStringExtra("id_server"));
-            ns.setText(intent.getStringExtra("name_server"));
-            location.setText(intent.getStringExtra("location"));
-            acc.setText(intent.getStringExtra("acc_remaining"));
-            Glide.with(getApplicationContext()).load(ApiClient.BASE_URL+"uploads/"+intent.getStringExtra("flag_image")).into(img);
+            id = intent.getStringExtra("id_user");
+            getSupportActionBar().setTitle("Update id "+intent.getStringExtra("id_user"));
+            fn.setText(intent.getStringExtra("name"));
+            uname.setText(intent.getStringExtra("username"));
+            pass.setText(intent.getStringExtra("password"));
+            Glide.with(getApplicationContext()).load(ApiClient.BASE_URL+"uploads/users/"+intent.getStringExtra("photo")).into(img);
             save.setText("Update");
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -159,8 +159,8 @@ public class ManageServer extends AppCompatActivity {
     }
 
     private boolean checkValidation(){
-        if(ns.getText().toString().equals("") || location.getText().toString().equals("") ||
-                acc.getText().toString().equals("")){
+        if(fn.getText().toString().equals("") || uname.getText().toString().equals("") ||
+                pass.getText().toString().equals("")){
             return false;
         }else{
             return true;
@@ -169,7 +169,8 @@ public class ManageServer extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        finish();
+        Intent back = new Intent(getApplicationContext(),UserActivity.class);
+        startActivity(back);
         return true;
     }
 

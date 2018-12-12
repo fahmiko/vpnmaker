@@ -22,9 +22,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ManageServer" />
-        <activity android:name=".ViewServer" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".CreateVpn"></activity>
+        <activity android:name=".UserActivity" />
+        <activity android:name=".ManageUser"></activity>
     </application>
 
 </manifest>

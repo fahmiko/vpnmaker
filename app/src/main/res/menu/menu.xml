@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menuDtServer"
+        android:title="Data Server"/>
+    <item android:id="@+id/menuDtAcc"
+        android:title="Data Account"/>
+    <item android:id="@+id/menuDtUser"
+        android:title="Data User"/>
+    <item android:id="@+id/menuLogour"
+        android:title="Logout"/>
+</menu>

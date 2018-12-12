@@ -9,15 +9,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -28,7 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends MenuItem {
     private Preference preference;
     RecyclerView mRecyclerView;
     RecyclerView.Adapter mAdapter;
@@ -81,14 +78,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onLongClick(View v, int position) {
                 final Server server = listServer.get(position);
-                final CharSequence[] dialogitem = {"View Server","Update Server","Delete Server"};
+                final CharSequence[] dialogitem = {"Update Server","Delete Server"};
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
                 builder.setItems(dialogitem, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
-                            case 1:
+                            case 0:
                                 Intent i = new Intent(getApplicationContext(), ManageServer.class);
                                 i.putExtra("id_server",String.valueOf(server.getIdServer()));
                                 i.putExtra("name_server",server.getName_server());
@@ -97,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                                 i.putExtra("flag_image",server.getFlag_image());
                                 startActivity(i);
                                 break;
-                                case 2:
+                                case 1:
                                     RequestBody reqIdServer =
                                             MultipartBody.create(MediaType.parse("multipart/form-data"),
                                                     (server.getIdServer().isEmpty())?

@@ -39,4 +39,34 @@ public interface ApiInterface {
     Call<GetServer> deleteServer(
             @Part("id_server") RequestBody idServer,
             @Part("action") RequestBody action);
+
+    @GET("user/all")
+    Call<GetUser> getUser();
+
+    @Multipart
+    @POST("user/all")
+    Call<GetUser> postUser(
+            @Part MultipartBody.Part file,
+            @Part("name") RequestBody name,
+            @Part("username") RequestBody username,
+            @Part("password") RequestBody password,
+            @Part("action") RequestBody action
+    );
+
+    @Multipart
+    @POST("user/all")
+    Call<GetUser> putUser(
+            @Part MultipartBody.Part file,
+            @Part("id_user") RequestBody id_user,
+            @Part("name") RequestBody name,
+            @Part("username") RequestBody username,
+            @Part("password") RequestBody password,
+            @Part("action") RequestBody action
+    );
+
+    @Multipart
+    @POST("user/all")
+    Call<GetUser> deleteUser(
+            @Part("id_user") RequestBody id_user,
+            @Part("action") RequestBody action);
 }
