@@ -12,35 +12,32 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class ManageAcc extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-
+public class ManageAcc extends AppCompatActivity{
+    DatePickerDialog datePickerDialog;
+    SimpleDateFormat simpleDateFormat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_acc);
         final EditText cal = findViewById(R.id.macc_active);
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                cal.setText(Calendar.YEAR);
-                cal.setText(Calendar.MONTH);
-                cal.setText(Calendar.DAY_OF_MONTH);
-            }
-        };
-
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);
         cal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(this,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH)).show();
+                showDialog();
             }
         });
     }
 
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
-        cal.setText(Calendar.YEAR);
-        cal.setText(Calendar.MONTH);
-        cal.setText(Calendar.DAY_OF_MONTH);
+    public void showDialog(){
+        final Calendar calendar = Calendar.getInstance();
+        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year,month,dayOfMonth);
+            }
+        },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
     }
 }

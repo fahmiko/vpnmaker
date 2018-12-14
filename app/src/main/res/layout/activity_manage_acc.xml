@@ -5,8 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
-    android:layout_margin="10dp"
+    android:background="@color/colorPrimaryDark"
     tools:context=".ManageAcc">
+    <RelativeLayout
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <EditText
         android:id="@+id/macc_user"
@@ -28,6 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/macc_server"
+        android:background="@color/cardview_shadow_end_color"
+        android:textColor="@color/cardview_shadow_end_color"
         android:clickable="true"
         android:editable="false"
         android:drawableRight="@android:drawable/ic_lock_idle_lock"
@@ -43,5 +49,5 @@
         android:background="@color/colorAccent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
+    </RelativeLayout>
 </RelativeLayout>
