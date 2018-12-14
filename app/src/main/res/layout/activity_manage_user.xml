@@ -30,7 +30,7 @@
         android:layout_below="@+id/txt_uname"
         android:drawableRight="@android:drawable/ic_lock_idle_lock"
         android:hint="Password"
-        android:inputType="number" />
+        android:inputType="textPassword" />
 
 
     <Button

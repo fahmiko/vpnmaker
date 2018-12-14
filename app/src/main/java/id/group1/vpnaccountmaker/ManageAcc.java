@@ -93,28 +93,18 @@ public class ManageAcc extends AppCompatActivity {
                         (active.getText().toString().isEmpty())?"":active.getText().toString());
 
                 Call<GetAcc> mAccCall;
-
-                if(id!=null) {
-                    RequestBody reqId_acc = MultipartBody.create(MediaType.parse("multipart/form-data"),
-                            (id.isEmpty())?"":id);
-                    RequestBody reqAction = MultipartBody.create(MediaType.parse("multipart/form-data"),
-                            "update");
-                    mAccCall = mApiInterface.putAcc(body, reqId_acc,reqUser,
-                            reqUser, reqServer, reqAction );
-                }else{
-                    RequestBody reqAction = MultipartBody.create(MediaType.parse("multipart/form-data"),
-                            "insert");
-                    mAccCall = mApiInterface.postAcc(body, reqServer,
-                            reqUser, reqActive, reqAction);
-                }
+                RequestBody reqAction = MultipartBody.create(MediaType.parse("multipart/form-data"),
+                        "insert");
+                mAccCall = mApiInterface.postAcc(body, reqServer,
+                        reqUser, reqActive, reqAction);
 
                 mAccCall.enqueue(new Callback<GetAcc>() {
                     @Override
                     public void onResponse(Call<GetAcc> call, Response<GetAcc> response) {
 //                      Log.d("Insert Retrofit",response.body().getMessage());
-                        if (response.body().getStatus().equals("failed")) {
-                            Toast.makeText(getApplicationContext(), "Proses Insert Gagal", Toast.LENGTH_SHORT).show();
-                        } else {
+                        if (response.body().getMessage().equals("server")) {
+                            Toast.makeText(getApplicationContext(), "Server/Id user tidak ditemukan", Toast.LENGTH_SHORT).show();
+                        }else {
                             Toast.makeText(getApplicationContext(), "UPDATE Success", Toast.LENGTH_SHORT).show();
                             AccountActivity.accActivity.RefreshData();
                             finish();

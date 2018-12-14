@@ -41,14 +41,12 @@ public class AccountActivity extends MenuItem {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
-        /*
         preference = new Preference(this);
         if (!preference.checkSavedCredetential()) {
             Intent i = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(i);
             Toast.makeText(this, "Login Required", Toast.LENGTH_SHORT).show();
         }
-        */
         mContext = getApplicationContext();
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler3);
         mLayoutManager = new LinearLayoutManager(mContext);
@@ -72,54 +70,53 @@ public class AccountActivity extends MenuItem {
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), mRecyclerView, new ClickListenner() {
             @Override
             public void onClick(View v, int position) {
+                final Acc acc = listAcc.get(position);
+                RequestBody reqIdAcc =
+                        MultipartBody.create(MediaType.parse("multipart/form-data"),
+                                (acc.getId().isEmpty())?
+                                        "" : acc.getId());
+                RequestBody reqAction =
+                        MultipartBody.create(MediaType.parse("multipart/form-data"), "delete");
 
+                Call<GetAcc> callDelete = mApiInterface.deleteAcc(reqIdAcc,reqAction);
+                callDelete.enqueue(new Callback<GetAcc>() {
+                    @Override
+                    public void onResponse(Call<GetAcc> call, Response<GetAcc> response) {
+                        if(response.message().toString().equals("Internal Server Error")){
+                            Toast.makeText(getApplicationContext(),"Error, Cek tabel master",Toast.LENGTH_SHORT).show();
+                        }
+                        RefreshData();
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetAcc> call, Throwable t) {
+
+                    }
+                });
             }
 
             @Override
             public void onLongClick(View v, int position) {
-                final Acc acc = listAcc.get(position);
-                final CharSequence[] dialogitem = {"Update Account","Delete Account"};
-                AlertDialog.Builder builder = new AlertDialog.Builder(AccountActivity.this);
-
-                builder.setItems(dialogitem, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-                            case 0:
-                                Intent i = new Intent(getApplicationContext(), ManageAcc.class);
-                                i.putExtra("id_acc",String.valueOf(acc.getId()));
-                                i.putExtra("user",acc.getUser());
-                                i.putExtra("server",acc.getServer());
-                                i.putExtra("active",acc.getActive());
-                                startActivity(i);
-                                break;
-                            case 1:
-                                RequestBody reqIdAcc =
-                                        MultipartBody.create(MediaType.parse("multipart/form-data"),
-                                                (acc.getId().isEmpty())?
-                                                        "" : acc.getId());
-                                RequestBody reqAction =
-                                        MultipartBody.create(MediaType.parse("multipart/form-data"), "delete");
-
-                                Call<GetAcc> callDelete = mApiInterface.deleteAcc(reqIdAcc,reqAction);
-                                callDelete.enqueue(new Callback<GetAcc>() {
-                                    @Override
-                                    public void onResponse(Call<GetAcc> call, Response<GetAcc> response) {
-                                        if(response.message().toString().equals("Internal Server Error")){
-                                            Toast.makeText(getApplicationContext(),"Error, Cek tabel master",Toast.LENGTH_SHORT).show();
-                                        }
-                                        RefreshData();
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<GetAcc> call, Throwable t) {
-
-                                    }
-                                });
-                                break;
-                        }
-                    }
-                }).create().show();
+//                final Acc acc = listAcc.get(position);
+//                final CharSequence[] dialogitem = {"Update Account","Delete Account"};
+//                AlertDialog.Builder builder = new AlertDialog.Builder(AccountActivity.this);
+//
+//                builder.setItems(dialogitem, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        switch (which){
+//                            case 0:
+//                                Intent i = new Intent(getApplicationContext(), ManageAcc.class);
+//                                i.putExtra("id_acc",String.valueOf(acc.getId()));
+//                                i.putExtra("active",acc.getActive());
+//                                startActivity(i);
+//                                break;
+//                            case 1:
+//
+//                                break;
+//                        }
+//                    }
+//                }).create().show();
             }
         }));
     }

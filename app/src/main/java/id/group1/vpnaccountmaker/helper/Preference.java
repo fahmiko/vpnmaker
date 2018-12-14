@@ -15,18 +15,18 @@ import id.group1.vpnaccountmaker.MainActivity;
 import id.group1.vpnaccountmaker.ManageServer;
 
 public class Preference {
-    private VpnHelper dbHelper;
+//    private VpnHelper dbHelper;
     private Context context;
 
     public Preference(Context context) {
         this.context = context;
-        this.dbHelper = new VpnHelper(context);
+//        this.dbHelper = new VpnHelper(context);
     }
 
     public boolean login(String username, String password){
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM users WHERE username='"+username+"' AND password='"+password+"'",null);
-        if(cursor.getCount()>0){
+//        SQLiteDatabase db = dbHelper.getReadableDatabase();
+//        Cursor cursor = db.rawQuery("SELECT * FROM users WHERE username='"+username+"' AND password='"+password+"'",null);
+        if(username.equals("admin") && password.equals("admin")){
             saveCredentials(username,password);
             return true;
         }else {

@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:textColor="@color/cardview_light_background"
         android:layout_height="wrap_content"
+        android:inputType="number"
         android:drawableRight="@android:drawable/ic_menu_sort_alphabetically"
         android:hint="Id User" />
 
@@ -24,6 +25,7 @@
         android:id="@+id/macc_server"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="number"
         android:layout_below="@+id/macc_user"
         android:textColor="@color/cardview_light_background"
         android:drawableRight="@android:drawable/ic_menu_info_details"
@@ -35,6 +37,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/macc_server"
         android:textColor="@color/cardview_light_background"
+        android:cursorVisible="false"
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+        android:inputType="none"
         android:clickable="true"
         android:drawableRight="@android:drawable/ic_lock_idle_lock"
         android:hint="Active Date" />

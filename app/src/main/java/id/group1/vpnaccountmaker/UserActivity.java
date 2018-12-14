@@ -41,14 +41,12 @@ public class UserActivity extends MenuItem {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-        /*
         preference = new Preference(this);
         if (!preference.checkSavedCredetential()) {
             Intent i = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(i);
             Toast.makeText(this, "Login Required", Toast.LENGTH_SHORT).show();
         }
-        */
         mContext = getApplicationContext();
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler2);
         mLayoutManager = new LinearLayoutManager(mContext);
