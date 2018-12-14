@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -85,7 +86,7 @@ public class AccountActivity extends MenuItem {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
                             case 0:
-                                Intent i = new Intent(getApplicationContext(), ManageUser.class);
+                                Intent i = new Intent(getApplicationContext(), ManageAcc.class);
                                 i.putExtra("id_acc",String.valueOf(acc.getId()));
                                 i.putExtra("user",acc.getUser());
                                 i.putExtra("server",acc.getServer());
@@ -104,6 +105,9 @@ public class AccountActivity extends MenuItem {
                                 callDelete.enqueue(new Callback<GetAcc>() {
                                     @Override
                                     public void onResponse(Call<GetAcc> call, Response<GetAcc> response) {
+                                        if(response.message().toString().equals("Internal Server Error")){
+                                            Toast.makeText(getApplicationContext(),"Error, Cek tabel master",Toast.LENGTH_SHORT).show();
+                                        }
                                         RefreshData();
                                     }
 

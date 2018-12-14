@@ -15,6 +15,7 @@
     <EditText
         android:id="@+id/macc_user"
         android:layout_width="match_parent"
+        android:textColor="@color/cardview_light_background"
         android:layout_height="wrap_content"
         android:drawableRight="@android:drawable/ic_menu_sort_alphabetically"
         android:hint="Id User" />
@@ -24,6 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/macc_user"
+        android:textColor="@color/cardview_light_background"
         android:drawableRight="@android:drawable/ic_menu_info_details"
         android:hint="Id Server" />
 
@@ -32,10 +34,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/macc_server"
-        android:background="@color/cardview_shadow_end_color"
-        android:textColor="@color/cardview_shadow_end_color"
+        android:textColor="@color/cardview_light_background"
         android:clickable="true"
-        android:editable="false"
         android:drawableRight="@android:drawable/ic_lock_idle_lock"
         android:hint="Active Date" />
 

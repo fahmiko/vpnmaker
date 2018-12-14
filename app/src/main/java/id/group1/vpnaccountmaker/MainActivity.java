@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -106,12 +107,16 @@ public class MainActivity extends MenuItem {
                                     callDelete.enqueue(new Callback<GetServer>() {
                                         @Override
                                         public void onResponse(Call<GetServer> call, Response<GetServer> response) {
-                                            RefreshData();
+                                            if(response.message().toString().equals("Internal Server Error")){
+                                                Toast.makeText(getApplicationContext(),"Error, Cek tabel master",Toast.LENGTH_SHORT).show();
+                                            }
+                                                RefreshData();
+
                                         }
 
                                         @Override
                                         public void onFailure(Call<GetServer> call, Throwable t) {
-
+                                            Toast.makeText(getApplicationContext(),"Error, Cek tabel master",Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                     break;
